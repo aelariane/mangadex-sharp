@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaDexSharp", "src\MangaDexSharp\MangaDexSharp.csproj", "{C53AEE6F-50D0-4B7E-97D1-4ADDB9D71CB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A7D4BF37-D0BE-45B7-8F89-E1BE89298AA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleApp", "src\ExampleApp\ExampleApp.csproj", "{397C30AE-4F75-4CFB-A554-B0262BA82E5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaDexSharp.Tests", "tests\MangaDexSharp.Tests\MangaDexSharp.Tests.csproj", "{3A69CFC2-BDB2-49B7-9B3D-EBA143EB27BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BC243C83-925E-43A2-AE8E-35F7C89175FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaDexSharp.Authenticated.Tests", "tests\MangaDexSharp.AuthenticatedApi.Tests copy\MangaDexSharp.Authenticated.Tests.csproj", "{A8C16E34-17B6-40A6-B03F-A2D83CCF7CA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C53AEE6F-50D0-4B7E-97D1-4ADDB9D71CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C53AEE6F-50D0-4B7E-97D1-4ADDB9D71CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C53AEE6F-50D0-4B7E-97D1-4ADDB9D71CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C53AEE6F-50D0-4B7E-97D1-4ADDB9D71CB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397C30AE-4F75-4CFB-A554-B0262BA82E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397C30AE-4F75-4CFB-A554-B0262BA82E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397C30AE-4F75-4CFB-A554-B0262BA82E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397C30AE-4F75-4CFB-A554-B0262BA82E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A69CFC2-BDB2-49B7-9B3D-EBA143EB27BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A69CFC2-BDB2-49B7-9B3D-EBA143EB27BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A69CFC2-BDB2-49B7-9B3D-EBA143EB27BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A69CFC2-BDB2-49B7-9B3D-EBA143EB27BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8C16E34-17B6-40A6-B03F-A2D83CCF7CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8C16E34-17B6-40A6-B03F-A2D83CCF7CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8C16E34-17B6-40A6-B03F-A2D83CCF7CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8C16E34-17B6-40A6-B03F-A2D83CCF7CA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C53AEE6F-50D0-4B7E-97D1-4ADDB9D71CB0} = {A7D4BF37-D0BE-45B7-8F89-E1BE89298AA4}
+		{397C30AE-4F75-4CFB-A554-B0262BA82E5F} = {A7D4BF37-D0BE-45B7-8F89-E1BE89298AA4}
+		{3A69CFC2-BDB2-49B7-9B3D-EBA143EB27BE} = {BC243C83-925E-43A2-AE8E-35F7C89175FD}
+		{A8C16E34-17B6-40A6-B03F-A2D83CCF7CA3} = {BC243C83-925E-43A2-AE8E-35F7C89175FD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F6ED365-3303-4136-894A-4397089E9F85}
+	EndGlobalSection
+EndGlobal
