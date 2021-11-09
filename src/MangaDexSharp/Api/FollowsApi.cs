@@ -21,7 +21,7 @@ namespace MangaDexSharp.Api
     {
         internal FollowsApi(MangaDexClient client) : base(client)
         {
-            BaseApiPath = MangaDexApiPath + "/user/follow";
+            BaseApiPath = MangaDexApiPath + "/user/follows";
         }
 
 
