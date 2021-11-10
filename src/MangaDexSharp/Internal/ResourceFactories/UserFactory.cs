@@ -43,6 +43,20 @@ namespace MangaDexSharp.Internal.ResourceFactories
 
         public void Sync(MangaDexResource resource, ResourceDto dto)
         {
+            User user = (User)resource;
+            if(dto is UserDto userDto)
+            {
+                if (userDto.ScanlationGroupRelations != null)
+                {
+                    foreach (ScanlationGroupDto group in userDto.ScanlationGroupRelations)
+                    {
+                        if (user.RelatedGroupIds.Contains(group.Id) == false)
+                        {
+                            user.RelatedGroupIds.Add(group.Id);
+                        }
+                    }
+                }
+            }
         }
     }
 }

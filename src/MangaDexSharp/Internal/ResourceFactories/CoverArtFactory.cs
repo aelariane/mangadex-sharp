@@ -58,6 +58,24 @@ namespace MangaDexSharp.Internal.ResourceFactories
 
         public void Sync(MangaDexResource resource, ResourceDto dto)
         {
+            CoverArt cover = (CoverArt)resource;
+            if(dto is CoverArtDto coverDto)
+            {
+                if (cover.MangaId == Guid.Empty)
+                {
+                    if (coverDto.MangaRelations != null)
+                    {
+                        cover.MangaId = coverDto.MangaRelations.First().Id;
+                    }
+                }
+                if (cover.UploaderId == Guid.Empty)
+                {
+                    if (coverDto.UserRelations != null)
+                    {
+                        cover.UploaderId = coverDto.UserRelations.First().Id;
+                    }
+                }
+            }
         }
     }
 }

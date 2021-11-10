@@ -109,6 +109,38 @@ namespace MangaDexSharp.Internal.ResourceFactories
 
         public void Sync(MangaDexResource resource, ResourceDto dto)
         {
+            Manga manga = (Manga)resource;
+            if(dto is MangaDto mangaDto)
+            {
+                if (mangaDto.AuthorRelations != null)
+                {
+                    foreach (AuthorDto author in mangaDto.AuthorRelations)
+                    {
+                        if (manga.RelatedAuthorIds.Contains(author.Id) == false)
+                        {
+                            manga.RelatedAuthorIds.Add(author.Id);
+                        }
+                    }
+                }
+
+                if (mangaDto.ArtistRelations != null)
+                {
+                    foreach (AuthorDto artist in mangaDto.ArtistRelations)
+                    {
+                        if (manga.RelatedArtistIds.Contains(artist.Id) == false)
+                        {
+                            manga.RelatedArtistIds.Add(artist.Id);
+                        }
+                    }
+                }
+                if (manga.MainCoverId == Guid.Empty)
+                {
+                    if (mangaDto.CoverRelations != null && mangaDto.CoverRelations.Any())
+                    {
+                        manga.MainCoverId = mangaDto.CoverRelations.First().Id;
+                    }
+                }
+                }
         }
     }
 }

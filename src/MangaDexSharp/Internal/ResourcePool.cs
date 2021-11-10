@@ -165,7 +165,6 @@ namespace MangaDexSharp.Internal
                 if (cache.TryGetValue(dto.Id, out object resultObject))
                 {
                     resource = (MangaDexResource)resultObject;
-                    _factories[resourceType].Sync(resource, dto);
                     UpdateReferenceEntry(resourceType, resource);
                 }
                 else
@@ -197,23 +196,23 @@ namespace MangaDexSharp.Internal
                     }
                 }
             }
+#pragma warning disable CS8604 // Possible null reference argument.
+            _factories[resourceType].Sync(resource, dto);
+#pragma warning restore CS8604 // Possible null reference argument.
 
             //Adding or updating relations for alreay existing resource
-            if (resource != null)
+            if (dto.AllRelations.Any())
             {
-                if (dto.AllRelations.Any())
+                foreach (ResourceDto relation in dto.AllRelations)
                 {
-                    foreach (ResourceDto relation in dto.AllRelations)
+                    DtoForAttribute? dtoAttribute = relation.GetType().GetCustomAttribute<DtoForAttribute>();
+                    if (dtoAttribute == null)
                     {
-                        DtoForAttribute? dtoAttribute = relation.GetType().GetCustomAttribute<DtoForAttribute>();
-                        if (dtoAttribute == null)
-                        {
-                            continue;
-                        }
-                        if (TryRetrieve(relation, dtoAttribute.ResourceType, out MangaDexResource? relations))
-                        {
-                            resource.RegisterRelation(resource);
-                        }
+                        continue;
+                    }
+                    if (TryRetrieve(relation, dtoAttribute.ResourceType, out MangaDexResource? relations))
+                    {
+                        resource.RegisterRelation(resource);
                     }
                 }
             }

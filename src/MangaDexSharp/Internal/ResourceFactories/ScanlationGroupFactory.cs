@@ -84,6 +84,24 @@ namespace MangaDexSharp.Internal.ResourceFactories
 
         public void Sync(MangaDexResource resource, ResourceDto dto)
         {
+            ScanlationGroup group = (ScanlationGroup)resource;
+            if(dto is ScanlationGroupDto groupDto)
+            {
+                if (groupDto.LeaderRelations != null && groupDto.LeaderRelations.Any() && group.LeaderId == null)
+                {
+                    group.RelatedLeaderId = groupDto.LeaderRelations.First().Id;
+                }
+                if (groupDto.MemberRelations != null)
+                {
+                    foreach (UserDto user in groupDto.MemberRelations)
+                    {
+                        if (group.RelatedMemberIds.Contains(user.Id) == false)
+                        {
+                            group.RelatedMemberIds.Add(user.Id);
+                        }
+                    }
+                }
+            }
         }
     }
 }

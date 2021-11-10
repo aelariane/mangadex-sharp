@@ -95,7 +95,21 @@ namespace MangaDexSharp.Internal.ResourceFactories
                 throw new ArgumentException($"Invald resource passed {resource.GetType()}. {nameof(Author)} expected");
             }
             author.IsArtist |= dto.Type == "artist";
-            //author.IsMangaAuthor |= dto.Type == "author";
+
+            AuthorDto? authorDto = dto as AuthorDto;
+            if (authorDto != null)
+            {
+                if (authorDto.MangaRelations != null)
+                {
+                    foreach (var manga in authorDto.MangaRelations)
+                    {
+                        if (author.RelatedMangaIds.Contains(manga.Id) == false)
+                        {
+                            author.RelatedMangaIds.Add(manga.Id);
+                        }
+                    }
+                }
+            }
         }
     }
 }
