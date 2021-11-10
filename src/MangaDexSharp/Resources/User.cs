@@ -17,6 +17,8 @@ namespace MangaDexSharp.Resources
     /// </summary>
     public class User : MangaDexResource 
     {
+        private bool _noGroups;
+
         internal HashSet<Guid> RelatedGroupIds { get; } = new HashSet<Guid>();
 
         /// <summary>
@@ -92,7 +94,20 @@ namespace MangaDexSharp.Resources
         {
             if(RelatedGroupIds.Count == 0)
             {
-                return new List<ScanlationGroup>();
+                if (_noGroups)
+                {
+                    return new List<ScanlationGroup>();
+                }
+                var includes = new IncludeParameters()
+                {
+                    IncludeScanlationGroup = true
+                };
+                User user = await Client.User.GetUser(Id, includes, cancelToken);
+                if (user.RelatedGroupIds.Count == 0)
+                {
+                    _noGroups = true;
+                }
+                return await GetUserGroups(cancelToken);
             }
 
             if(TryGetRelationCollection(RelatedGroupIds, out List<ScanlationGroup> groups))

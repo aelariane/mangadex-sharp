@@ -19,6 +19,8 @@ namespace MangaDexSharp.Resources
 {
     public class ScanlationGroup : MangaDexAuditableResource
     {
+        private bool _noLeader;
+        private bool _noMembers;
         internal string? DiscordCode { get; set; }
         internal HashSet<Guid> RelatedMemberIds { get; } = new HashSet<Guid>();
         internal Guid? RelatedLeaderId { get; set; }
@@ -139,7 +141,21 @@ namespace MangaDexSharp.Resources
         {
             if(RelatedLeaderId == null)
             {
-                return null;
+                if (_noLeader)
+                {
+                    return null;
+                }
+                var includes = new IncludeParameters() 
+                { 
+                    IncludeLeader = true,
+                    IncludeMembers = true
+                };
+                ScanlationGroup group = await Client.ScanlationGroup.ViewGroup(Id, includes, cancelToken);
+                if(group.RelatedLeaderId == null)
+                {
+                    _noLeader = true;
+                }
+                return await GetLeader(cancelToken);
             }
             if(TryGetRelation(RelatedLeaderId.Value, out User? leader) && leader != null)
             {
@@ -162,7 +178,21 @@ namespace MangaDexSharp.Resources
             var result = new List<User>();
             if (RelatedMemberIds.Count == 0)
             {
-                return result;
+                if (_noMembers)
+                {
+                    return result;
+                }
+                var includes = new IncludeParameters()
+                {
+                    IncludeLeader = true,
+                    IncludeMembers = true
+                };
+                ScanlationGroup group = await Client.ScanlationGroup.ViewGroup(Id, includes, cancelToken);
+                if (group.RelatedMemberIds == null)
+                {
+                    _noMembers = true;
+                }
+                return await GetMembers(cancelToken);
             }
 
             if(TryGetRelationCollection(RelatedMemberIds, out result))

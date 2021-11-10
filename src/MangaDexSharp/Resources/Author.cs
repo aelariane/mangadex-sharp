@@ -16,6 +16,7 @@ namespace MangaDexSharp.Resources
     /// </summary>
     public class Author : MangaDexAuditableResource
     {
+        private bool _noManga = false;
         internal HashSet<Guid> RelatedMangaIds { get; } = new HashSet<Guid>();
 
         /// <summary>
@@ -130,7 +131,17 @@ namespace MangaDexSharp.Resources
         {
             if(RelatedMangaIds.Count == 0)
             {
-                return new List<Manga>();
+                if (_noManga)
+                {
+                    return new List<Manga>();
+                }
+
+                Author author = await Client.Author.GetAuthor(Id, new IncludeParameters() { IncludeManga = true }, cancelToken);
+                if(author.RelatedMangaIds.Count == 0)
+                {
+                    _noManga = true;
+                }
+                return await GetMangaList(cancelToken);
             }
             if (TryGetRelationCollection(RelatedMangaIds, out List<Manga> list))
             {

@@ -24,8 +24,12 @@ namespace MangaDexSharp.Resources
     /// </summary>
     public class Manga : MangaDexAuditableResource
     {
+        private bool _noArtists;
+        private bool _noAuthors;
+        private bool _noMainCover;
         private bool _statusFetched = false;
         private MangaReadingStatus? _status;
+
 
         internal Dictionary<string, string> LinksDictionary { get; set; }
         internal HashSet<Guid> RelatedAuthorIds { get; } = new HashSet<Guid>();
@@ -179,7 +183,22 @@ namespace MangaDexSharp.Resources
         {
             if (RelatedArtistIds.Any() == false)
             {
-                return new List<Author>();
+                if (_noArtists)
+                {
+                    return new List<Author>();
+                }
+                var includes = new IncludeParameters()
+                {
+                    IncludeAuthor = true,
+                    IncludeArtist = true,
+                    IncludeCover = true
+                };
+                Manga manga = await Client.Manga.ViewManga(Id, includes, cancelToken);
+                if(manga.RelatedArtistIds.Count == 0)
+                {
+                    _noArtists = true;
+                }
+                return await GetArtists(cancelToken);
             }
 
             if(TryGetRelationCollection(RelatedArtistIds, out List<Author> artists))
@@ -216,7 +235,22 @@ namespace MangaDexSharp.Resources
         {
             if (RelatedAuthorIds.Any() == false)
             {
-                return new List<Author>();
+                if (_noAuthors)
+                {
+                    return new List<Author>();
+                }
+                var includes = new IncludeParameters()
+                {
+                    IncludeAuthor = true,
+                    IncludeArtist = true,
+                    IncludeCover = true
+                };
+                Manga manga = await Client.Manga.ViewManga(Id, includes, cancelToken);
+                if (manga.RelatedAuthorIds.Count == 0)
+                {
+                    _noAuthors = true;
+                }
+                return await GetArtists(cancelToken);
             }
 
             if (TryGetRelationCollection(RelatedAuthorIds, out List<Author> artists))
@@ -280,6 +314,16 @@ namespace MangaDexSharp.Resources
         /// <returns></returns>
         public async Task<CoverArt> GetMainCover(CancellationToken cancelToken = default)
         {
+            if(MainCoverArtId == Guid.Empty)
+            {
+                var includes = new IncludeParameters()
+                {
+                    IncludeAuthor = true,
+                    IncludeArtist = true,
+                    IncludeCover = true
+                };
+                await Client.Manga.ViewManga(Id, includes, cancelToken);
+            }
             if(TryGetRelation(MainCoverArtId, out CoverArt? cover) && cover != null)
             {
                 return cover;
@@ -322,6 +366,14 @@ namespace MangaDexSharp.Resources
         public async Task<IReadOnlyDictionary<Manga, MangaRelation>> GetRelatedMangas(CancellationToken cancelToken = default)
         {
             IReadOnlyDictionary<Guid, MangaRelation> relations =  await Client.Manga.GetRelatedMangas(Id, cancelToken);
+
+            foreach(var pair in relations)
+            {
+                if(RelatedMangaIds.ContainsKey(pair.Key) == false)
+                {
+                    RelatedMangaIds.Add(pair.Key, pair.Value);
+                }
+            }
 
             var result = new Dictionary<Manga, MangaRelation>();
             if (relations.Count == 0)
