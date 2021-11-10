@@ -98,11 +98,7 @@ namespace MangaDexSharp.Resources
                 {
                     return new List<ScanlationGroup>();
                 }
-                var includes = new IncludeParameters()
-                {
-                    IncludeScanlationGroup = true
-                };
-                User user = await Client.User.GetUser(Id, includes, cancelToken);
+                User user = await Client.User.GetUser(Id, null, cancelToken);
                 if (user.RelatedGroupIds.Count == 0)
                 {
                     _noGroups = true;

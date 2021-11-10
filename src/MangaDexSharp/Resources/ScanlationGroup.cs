@@ -145,12 +145,7 @@ namespace MangaDexSharp.Resources
                 {
                     return null;
                 }
-                var includes = new IncludeParameters() 
-                { 
-                    IncludeLeader = true,
-                    IncludeMembers = true
-                };
-                ScanlationGroup group = await Client.ScanlationGroup.ViewGroup(Id, includes, cancelToken);
+                ScanlationGroup group = await Client.ScanlationGroup.ViewGroup(Id,  null, cancelToken);
                 if(group.RelatedLeaderId == null)
                 {
                     _noLeader = true;
@@ -182,12 +177,7 @@ namespace MangaDexSharp.Resources
                 {
                     return result;
                 }
-                var includes = new IncludeParameters()
-                {
-                    IncludeLeader = true,
-                    IncludeMembers = true
-                };
-                ScanlationGroup group = await Client.ScanlationGroup.ViewGroup(Id, includes, cancelToken);
+                ScanlationGroup group = await Client.ScanlationGroup.ViewGroup(Id, null, cancelToken);
                 if (group.RelatedMemberIds == null)
                 {
                     _noMembers = true;

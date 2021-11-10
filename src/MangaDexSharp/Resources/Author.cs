@@ -136,7 +136,7 @@ namespace MangaDexSharp.Resources
                     return new List<Manga>();
                 }
 
-                Author author = await Client.Author.GetAuthor(Id, new IncludeParameters() { IncludeManga = true }, cancelToken);
+                Author author = await Client.Author.GetAuthor(Id, null, cancelToken);
                 if(author.RelatedMangaIds.Count == 0)
                 {
                     _noManga = true;
