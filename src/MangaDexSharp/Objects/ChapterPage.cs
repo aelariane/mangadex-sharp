@@ -27,8 +27,8 @@ namespace MangaDexSharp.Objects
             //_hash = hash;
             //_fileNames = fifeNames;
             UseCompressedImage = dataSaver;
-            SourceQualityImageUrl = new Uri(baseUrl + "/data/" + hash + fileNames[0]);
-            CompressedImageUrl = new Uri(baseUrl + "/data-saver/" + hash + fileNames[1]); 
+            SourceQualityImageUrl = new Uri(baseUrl + "/data/" + hash + "/"+ fileNames[0]);
+            CompressedImageUrl = new Uri(baseUrl + "/data-saver/" + hash + "/" + fileNames[1]); 
         }
 
         //public async Task<byte[]> LoadImageData()
