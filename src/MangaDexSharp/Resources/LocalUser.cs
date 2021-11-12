@@ -60,7 +60,7 @@ namespace MangaDexSharp.Resources
         /// <returns>Paginated collection of <seealso cref="ScanlationGroup"/></returns>
         public async Task<IFixedPaginatedCollection<ScanlationGroup>> GetFollowedGroups(CancellationToken cancelToken = default)
         {
-            var parameters = new GetFollowedGroupsParameters();
+            var parameters = Client.CreateParameters<GetFollowedGroupsParameters>();
             parameters.Amount = Client.Settings.ItemsPerPage; 
             parameters.Includes = new IncludeParameters()
             {
@@ -84,7 +84,7 @@ namespace MangaDexSharp.Resources
         /// <returns>Paginated collection of <seealso cref="Manga"/></returns>
         public async Task<IFixedPaginatedCollection<Manga>> GetFollowedManga(CancellationToken cancelToken = default)
         {
-            var parameters = new GetFollowedMangaParameters();
+            var parameters = Client.CreateParameters<GetFollowedMangaParameters>();
             parameters.Amount = Client.Settings.ItemsPerPage;
             parameters.Includes = new IncludeParameters()
             {
