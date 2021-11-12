@@ -73,7 +73,7 @@ namespace MangaDexSharp.Objects
                 && MarkAsReadOnClose
                 && !IsClosed)
             {
-                Close().Start();
+                Task.Run(Close);
             }
         }
 
