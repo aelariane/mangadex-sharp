@@ -29,7 +29,7 @@ namespace MangaDexSharp
             Client = client;
         }
 
-        internal void RegisterRelation(MangaDexResource other)
+        internal virtual void RegisterRelation(MangaDexResource other)
         {
             _relatedResources ??= new HashSet<MangaDexResource>();
             if(_relatedResources.Contains(other) == false)

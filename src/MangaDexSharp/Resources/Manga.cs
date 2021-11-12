@@ -163,6 +163,19 @@ namespace MangaDexSharp.Resources
             Links = new MangaLinks(this);
         }
 
+        internal override void RegisterRelation(MangaDexResource other)
+        {
+            base.RegisterRelation(other);
+            if(other is CoverArt cover && MainCoverId == cover.Id)
+            {
+                if(cover.MangaId == Guid.Empty)
+                {
+                    cover.MangaId = Id;
+                    cover.RegisterRelation(this);
+                }
+            }
+        }
+
         /// <summary>
         /// Follows <see cref="MangaDexClient.CurrentUser"/> to the Manga
         /// </summary>
