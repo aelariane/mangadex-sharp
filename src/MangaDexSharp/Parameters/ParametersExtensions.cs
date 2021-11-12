@@ -261,7 +261,7 @@ namespace MangaDexSharp.Parameters
             where TOptions : QueryParameters, new()
         {
             var result = new TOptions();
-            result.AddTranslatedLanguages(client.Settings);
+            result.ApplySettings(client.Settings);
             return result;
         }
     }
