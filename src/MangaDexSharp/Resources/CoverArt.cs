@@ -92,7 +92,7 @@ namespace MangaDexSharp.Resources
         {
             if(UploaderId == Guid.Empty)
             {
-                await Client.Cover.GetCover(Id, new IncludeParameters() { IncludeUser = true, IncludeManga = true }, cancelToken);
+                await Client.Cover.GetCover(Id, null, cancelToken);
             }
             if (TryGetRelation(UploaderId, out User? user) && user != null)
             {
