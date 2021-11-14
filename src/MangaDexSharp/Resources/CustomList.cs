@@ -158,7 +158,7 @@ namespace MangaDexSharp.Resources
             parameters.Amount = Client.Settings.ItemsPerPage;
             parameters.MangaIds = RelatedMangaIds
                 .Take(Client.Settings.ItemsPerPage)
-                .ToHashSet();
+                .ToList();
 
             parameters.Includes = new IncludeParameters()
             {
