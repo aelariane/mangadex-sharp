@@ -27,7 +27,6 @@ namespace MangaDexSharp.Internal.JsonConverters
         private void ReadAndApplyRelationships(ref Utf8JsonReader reader, TResource resource, JsonSerializerOptions options)
         {
             IEnumerable<RelationshipMetadata> relationsMetadata = GetRelationshipsMetadata(typeof(TResource));
-            Dictionary<string, IList> relationFields = new Dictionary<string, IList>();
 
             while (reader.Read())
             {
@@ -74,16 +73,23 @@ namespace MangaDexSharp.Internal.JsonConverters
                 relation.Id = currentId;
                 relation.Type = typeName;
 
-                if (relationFields.TryGetValue(metadata.RelationshipName, out IList relationList) == false)
+                PropertyInfo prop = resource
+                    .GetType()
+                    .GetProperty(metadata.Property.Name);
+
+                IList relationList;
+                if(prop == null || prop.GetMethod.Invoke(resource, null) == null)
                 {
-                    //If field of relationship not set, create it as List<RelationType>
                     Type listType = typeof(List<>)
                         .MakeGenericType(metadata.RelationshipType);
 
                     relationList = Activator.CreateInstance(listType) as IList;
-                    metadata.Property.Invoke(resource, new object[] { relationList });
+                    metadata.Property.SetMethod.Invoke(resource, new object[] { relationList });
                 }
-
+                else
+                {
+                    relationList = prop.GetMethod.Invoke(resource, null) as IList;
+                }
                 //Add relation to relations list
                 relationList.Add(relation);
                 resource.AllRelations.Add(relation);
@@ -118,7 +124,7 @@ namespace MangaDexSharp.Internal.JsonConverters
 
                 foreach (RelationshipAttribute attribute in attributes)
                 {
-                    result.Add(new RelationshipMetadata(attribute.Relationship, relationship.GetSetMethod(), returnType));
+                    result.Add(new RelationshipMetadata(attribute.Relationship, relationship, returnType));
                 }
             }
 
@@ -223,9 +229,9 @@ namespace MangaDexSharp.Internal.JsonConverters
         {
             public Type RelationshipType { get; }
             public string RelationshipName { get; }
-            public MethodInfo Property { get; set; }
+            public PropertyInfo Property { get; set; }
 
-            public RelationshipMetadata(string key, MethodInfo member, Type type)
+            public RelationshipMetadata(string key, PropertyInfo member, Type type)
             {
                 RelationshipName = key;
                 Property = member;
