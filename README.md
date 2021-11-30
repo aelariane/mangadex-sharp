@@ -1,6 +1,6 @@
 # MangaDexSharp
 
-MangaDexSharp *unofficial* is a .NET library implementing some basic MangaDex(https://mangadex.org) API operations (Mostly read ones)<br>
+MangaDexSharp is an *unofficial* .NET library implementing some basic MangaDex(https://mangadex.org) API operations (Mostly read ones)<br>
 MangaDex API documentation can be found here: https://api.mangadex.org
 <br>
 
