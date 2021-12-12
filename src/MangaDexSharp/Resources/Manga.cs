@@ -111,7 +111,7 @@ namespace MangaDexSharp.Resources
         /// <summary>
         /// Manga tags
         /// </summary>
-        public IReadOnlyCollection<Tag>? Tags { get; }
+        public IReadOnlyCollection<Tag> Tags { get; }
 
         /// <summary>
         /// Main title of Manga
@@ -158,7 +158,7 @@ namespace MangaDexSharp.Resources
             }
             OriginalLanguage = originalLanguage;
             ContentRating = contentRating;
-            Tags = tags == null ? new List<Tag>() : null;
+            Tags = tags == null ? new List<Tag>() : new List<Tag>(tags);
 
             Links = new MangaLinks(this);
         }
