@@ -24,7 +24,7 @@ namespace MangaDexSharp.Enums
         /// <summary>
         /// Dropped reading the Manga
         /// </summary>
-        [EnumFieldStringValue("droppped")] Dropped,
+        [EnumFieldStringValue("dropped")] Dropped,
         /// <summary>
         /// In process of re-reading Manga
         /// </summary>
