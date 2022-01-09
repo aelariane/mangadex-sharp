@@ -27,11 +27,6 @@ namespace MangaDexSharp.Resources
         public string? ChapterName { get; internal set; }
 
         /// <summary>
-        /// Count of readable images for the chapter
-        /// </summary>
-        public int Pages { get; }
-
-        /// <summary>
         /// If is not present on MangaDex, refers to alternative source
         /// </summary>
         /// <remarks>Only valid if <seealso cref="Hash"/>, <seealso cref="Data"/>, <seealso cref="DataSaver"/> are empty</remarks>
@@ -46,6 +41,11 @@ namespace MangaDexSharp.Resources
         /// Id of <see cref="Manga"/> which Chapter belongs to
         /// </summary>
         public Guid MangaId => RelatedMangaId;
+
+        /// <summary>
+        /// Count of readable images for the chapter
+        /// </summary>
+        public int Pages { get; }
 
         /// <summary>
         /// Time of publishing Chapter
@@ -78,6 +78,7 @@ namespace MangaDexSharp.Resources
             Guid id,
             string title, 
             string translatedLanguage,
+            int pages,
             DateTime createdAt,
             DateTime updatedAt,
             DateTime publishAt)
@@ -86,6 +87,7 @@ namespace MangaDexSharp.Resources
             Title = title;
             TranslatedLanguage = translatedLanguage;
             PublishAt = publishAt;
+            Pages = pages;
         }
 
         /// <summary>
