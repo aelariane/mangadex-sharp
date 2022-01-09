@@ -21,6 +21,7 @@ namespace MangaDexSharp.Enums
         [EnumFieldStringValue("sequel")] Sequel,
         [EnumFieldStringValue("spin_off")] SpinOff,
         [EnumFieldStringValue("alternate_story")] AlternateStory,
+        [EnumFieldStringValue("alternate_version")] AlternateVersion,
         [EnumFieldStringValue("preserialization")] Preserialization,
         [EnumFieldStringValue("colored")] Colored,
         [EnumFieldStringValue("serialization")] Serialization
