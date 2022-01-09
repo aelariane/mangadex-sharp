@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-
+using MangaDexSharp.Api.Data;
 using MangaDexSharp.Exceptions;
 using MangaDexSharp.Internal.Dto.Responses.AtHome;
 using MangaDexSharp.Resources;
@@ -30,13 +30,26 @@ namespace MangaDexSharp.Api
         /// Read more about reading chapter via Api here: https://api.mangadex.org/docs.html#section/Reading-a-chapter-using-the-API
         /// </remarks>
         /// <exception cref="NotFoundException"></exception>
-        public async Task<string> GetServerUrlForChapter(Guid chapterId, bool forcePort443, CancellationToken cancelToken = default)
+        public async Task<ReadingSessionInformation> GetServerUrlForChapter(Guid chapterId, bool forcePort443, CancellationToken cancelToken = default)
         {
+            Chapter source = await mangaDexClient.Chapter.GetChapter(chapterId, new Parameters.IncludeParameters()
+            {
+                IncludeManga = true,
+                IncludeUser = true,
+                IncludeScanlationGroup = true
+            });
+
             AtHomeServerResponse response = await GetRequest<AtHomeServerResponse>(
                 BaseApiPath + "/server/" + chapterId + (forcePort443 ? "forcePort443=true" : string.Empty),
                 cancelToken);
 
-            return response.BaseUrl;
+            return new ReadingSessionInformation(
+                response.BaseUrl,
+                new ChapterReadingMetadata(
+                    response.Chapter.Data,
+                    response.Chapter.DataSaver,
+                    response.Chapter.Hash),
+                source);
         }
     }
 }

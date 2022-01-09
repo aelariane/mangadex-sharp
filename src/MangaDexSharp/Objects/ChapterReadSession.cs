@@ -32,27 +32,34 @@ namespace MangaDexSharp.Objects
 
         public int TotalPages { get; }
 
-        internal ChapterReadSession(string baseUrl, Chapter chapter, bool dataSaverMode, bool forcePort443)
+        internal ChapterReadSession(
+            string baseUrl,
+            Chapter chapter,
+            IEnumerable<string> data,
+            IEnumerable<string> dataSaver,
+            string hash,
+            bool dataSaverMode,
+            bool forcePort443)
         {
             _baseUrl = baseUrl;
             _chapter = chapter;
             _dataSaver = dataSaverMode;
 
-            var data = chapter.Data.ToArray();
-            var dataSaver = chapter.DataSaver.ToArray();
+            var dataArray = data.ToArray();
+            var dataSaverArray = dataSaver.ToArray();
 
             _pages = new List<ChapterPage>();
-            for(int i = 0; i < data.Length; i++)
+            for(int i = 0; i < dataArray.Length; i++)
             {
                 _pages.Add(new ChapterPage(
                     //_client,
                     baseUrl,
-                    chapter.Hash,
-                    new string[] { data[i].ToString(), dataSaver[i].ToString() },
+                    hash,
+                    new string[] { dataArray[i].ToString(), dataSaverArray[i].ToString() },
                     dataSaverMode));
             }
 
-            TotalPages = data.Length;
+            TotalPages = dataArray.Length;
             _client = chapter.Client;
             _port443WasForced = forcePort443;
             OpenedAt = DateTime.Now;

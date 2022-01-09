@@ -32,9 +32,6 @@ namespace MangaDexSharp.Internal.ResourceFactories
                 chapterDto.Id,
                 attributes.Title,
                 attributes.TranslatedLanguage,
-                attributes.Hash,
-                attributes.Data,
-                attributes.DataSaver,
                 attributes.CreatedAt,
                 attributes.UpdatedAt,
                 attributes.PublishAt);
