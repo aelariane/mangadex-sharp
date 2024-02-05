@@ -79,11 +79,16 @@ namespace MangaDexSharp.Api
         /// <returns></returns>
         /// <remarks>Requires to be logged in</remarks>
         /// <exception cref="UnauthorizedException"></exception>
-        public async Task MarkChapterRead(Guid chapterId, CancellationToken cancelToken = default)
+        public async Task MarkChapterRead(Guid mangaId, Guid chapterId, CancellationToken cancelToken = default)
         {
+            var readChapters = new ReadStatus()
+            {
+                chapterIdsRead = new Guid[] { chapterId }
+            };
+
             await PostRequest<MangaDexResponse>(
-                BaseApiPath + "/" + chapterId + "/read",
-                cancelToken);
+              MangaDexApiPath + "/manga" + "/" + mangaId + "/read",
+              cancelToken, payLoad: System.Text.Json.JsonSerializer.Serialize(readChapters));
         }
 
         /// <summary>
@@ -94,11 +99,22 @@ namespace MangaDexSharp.Api
         /// <returns></returns>
         /// <remarks>Requires to be logged in</remarks>
         /// <exception cref="UnauthorizedException"></exception>
-        public async Task MarkChapterUnread(Guid chapterId, CancellationToken cancelToken = default)
+        public async Task MarkChapterUnread(Guid mangaId, Guid chapterId, CancellationToken cancelToken = default)
         {
-            await DeleteRequest<MangaDexResponse>(
-                   BaseApiPath + "/" + chapterId + "/read",
-                   cancelToken);
+            var unreadChapters = new ReadStatus()
+            {
+                chapterIdsUnread = new Guid[] { chapterId }
+            };
+
+            await PostRequest<MangaDexResponse>(
+               MangaDexApiPath + "/manga" + "/" + mangaId + "/read",
+               cancelToken, payLoad: System.Text.Json.JsonSerializer.Serialize(unreadChapters));
+        }
+
+        public struct ReadStatus
+        {
+            public Guid[] chapterIdsRead { get; set; }
+            public Guid[] chapterIdsUnread { get; set; }
         }
     }
 }

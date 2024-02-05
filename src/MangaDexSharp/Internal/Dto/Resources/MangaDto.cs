@@ -30,6 +30,9 @@ namespace MangaDexSharp.Internal.Dto.Resources
         [Relationship(RelationshipNames.User)]
         public IEnumerable<UserDto> UserRelations { get; set; }
 
+        [Relationship(RelationshipNames.Creator)]
+        public IEnumerable<CreatorDto> Creator { get; set; }
         public MangaRelation Related { get; set; }
+
     }
 }

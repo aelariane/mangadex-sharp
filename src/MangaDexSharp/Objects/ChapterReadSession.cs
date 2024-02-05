@@ -69,7 +69,7 @@ namespace MangaDexSharp.Objects
         {
             if (MarkAsReadOnClose)
             {
-                await _client.Chapter.MarkChapterRead(_chapter.Id, cancelToken);
+                await _client.Chapter.MarkChapterRead(_chapter.MangaId, _chapter.Id, cancelToken);
             }
             IsClosed = true;
         }
