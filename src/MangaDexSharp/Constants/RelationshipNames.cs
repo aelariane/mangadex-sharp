@@ -16,5 +16,6 @@ namespace MangaDexSharp.Constants
         public const string Manga = "manga";
         public const string User = "user";
         public const string ScanlationGroup = "scanlation_group";
+        public const string Creator = "creator";
     }
 }

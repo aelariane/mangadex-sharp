@@ -165,7 +165,7 @@ namespace MangaDexSharp.Resources
         /// <exception cref="UnauthorizedException"></exception>
         public async Task MarkRead(CancellationToken cancelToken = default)
         {
-            await Client.Chapter.MarkChapterRead(Id, cancelToken);
+            await Client.Chapter.MarkChapterRead(MangaId, Id, cancelToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace MangaDexSharp.Resources
         /// <exception cref="UnauthorizedException"></exception>
         public async Task MarkUnread(CancellationToken cancelToken = default)
         {
-            await Client.Chapter.MarkChapterUnread(Id, cancelToken);
+            await Client.Chapter.MarkChapterUnread(MangaId, Id, cancelToken);
         }
 
         /// <summary>

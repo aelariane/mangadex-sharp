@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -166,7 +167,8 @@ namespace MangaDexSharp.Api
         internal async Task<TResponse> PostRequest<TResponse>(
             string url,
             CancellationToken cancelToken,
-            IQueryParameters? parameters = null)
+            IQueryParameters? parameters = null,
+            string? payLoad = null)
             where TResponse : MangaDexResponse
         {
             return await SendRequest<TResponse>(
@@ -174,7 +176,8 @@ namespace MangaDexSharp.Api
                 url,
                 cancelToken,
                 parameters,
-                true);
+                true,
+                payLoad);
         }
 
 
@@ -199,7 +202,8 @@ namespace MangaDexSharp.Api
             string url,
             CancellationToken cancelToken,
             IQueryParameters? parameters = null,
-            bool requiresAuth = false)
+            bool requiresAuth = false,
+            string? payLoad = null)
             where TResponse : MangaDexResponse
         {
             url = url.BuildQuery(parameters);
@@ -207,6 +211,11 @@ namespace MangaDexSharp.Api
             if (requiresAuth)
             {
                 await mangaDexClient.Auth.AddAuthorizationHeaders(request, cancelToken);
+            }
+
+            if (payLoad != null)
+            {
+                request.Content = new StringContent(payLoad, Encoding.UTF8, "application/json");
             }
 
             HttpResponseMessage response = await httpClient.SendAsync(request, cancelToken);
